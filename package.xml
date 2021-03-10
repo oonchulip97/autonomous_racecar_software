@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>auto-racecar</name>
-  <version>0.0.0</version>
-  <description>The auto-racecar package</description>
+  <name>auto_racecar</name>
+  <version>1.0.0</version>
+  <description>Autonomous Racecar Software Stack</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="oonchulip@todo.todo">oonchulip</maintainer>
+  <maintainer email="oonchulip@outlook.com">Oon Chu Lip</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/auto-racecar</url> -->
+  <!-- <url type="website">http://wiki.ros.org/auto_racecar</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -49,7 +49,13 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-
+  <exec_depend>gmapping</exec_depend>
+  <exec_depend>razor_imu_9dof</exec_depend>
+  <exec_depend>rf2o_laser_odometry</exec_depend>
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>rosserial_python</exec_depend>
+  <exec_depend>rplidar_ros</exec_depend>
+  <exec_depend>rviz</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

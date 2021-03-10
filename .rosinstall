@@ -1,0 +1,12 @@
+- git:
+    local-name: auto_racecar
+    uri: https://github.com/oonchulip97/autonomous_racecar_software.git
+    version: main
+- git:
+    local-name: razor_imu_9dof
+    uri: https://github.com/lebarsfa/razor_imu_9dof.git
+    version: KristofRobot-PR
+- git:
+    local-name: rf2o_laser_odometry
+    uri: https://github.com/MAPIRlab/rf2o_laser_odometry.git
+    version: master

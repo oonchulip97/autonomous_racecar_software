@@ -1,0 +1,37 @@
+## USB port (override by launch file)
+port: /dev/gy85
+topic: imu
+frame_id: base_imu_link
+
+##### Calibration ####
+### Accelerometer
+accel_x_min: -255.0
+accel_x_max: 244.0
+accel_y_min: -264.0
+accel_y_max: 247
+accel_z_min: -254.0
+accel_z_max: 250.0
+
+### Magnetometer
+# Standard calibration
+magn_x_min: -600.0
+magn_x_max: 600.0
+magn_y_min: -600.0
+magn_y_max: 600.0
+magn_z_min: -600.0
+magn_z_max: 600.0
+
+# Extended calibration
+calibration_magn_use_extended: true
+magn_ellipsoid_center: [-65.0016, 181.428, -52.8959]
+magn_ellipsoid_transform: [[0.368256, -0.00443682, -0.0152621],
+  [-0.00443682, 0.340406, 0.0459800],
+  [-0.0152621, 0.0459800, 0.996411]]
+
+# AHRS to robot calibration
+imu_yaw_calibration: 0.0
+
+### Gyroscope
+gyro_average_offset_x: 63.46
+gyro_average_offset_y: 82.90
+gyro_average_offset_z: -1.02

@@ -1,0 +1,6 @@
+# Set the udev rules to fix device ports for Arduino UNO, GY85, Rplidar
+# Copy this file into /etc/udev/rules.d/
+#
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="666", SYMLINK+="uno"
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE:="666", SYMLINK+="gy85"
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="666", SYMLINK+="rplidar"

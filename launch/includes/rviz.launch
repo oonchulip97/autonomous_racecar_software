@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- Rviz-->
+<launch>
+  <arg name="rviz_config_file" default="$(find auto_racecar)/rviz/default.rviz"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="$(arg rviz_config_file)"/>
+</launch>

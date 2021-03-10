@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="laser_serial_port"       default="/dev/rplidar"/>
+  <arg name="imu_serial_port"         default="/dev/gy85"/>
+  <arg name="motor_serial_port"       default="/dev/uno"/>
+  <arg name="laser_frame"             default="base_laser_link"/>
+  <arg name="imu_frame"               default="base_imu_link"/>
+  <arg name="base_frame"              default="base_link"/>
+  <arg name="odom_frame"              default="odom"/>
+  <arg name="map_frame"               default="map"/>
+  <arg name="laser_topic"             default="scan"/>
+  <arg name="imu_topic"               default="imu"/>
+  <arg name="odom_topic"              default="odom"/>
+  <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+
+  <!-- Transform -->
+  <!-- TODO -->
+
+  <!-- Sensors and Actuators -->
+  <!-- Lidar -->
+  <include file="$(find auto_racecar)/launch/includes/lidar.launch">
+    <arg name="serial_port" value="$(arg laser_serial_port)"/>
+    <arg name="frame_id"    value="$(arg laser_frame)"/>
+    <arg name="topic"       value="$(arg laser_topic)"/>
+  </include>
+  <!-- IMU -->
+  <include file="$(find auto_racecar)/launch/includes/imu.launch">
+    <arg name="imu_config_file" value="$(arg imu_config_file)"/>
+    <arg name="port"            value="$(arg imu_serial_port)"/>
+    <arg name="frame_id"        value="$(arg imu_frame)"/>
+    <arg name="topic"           value="$(arg imu_topic)"/>
+  </include>
+  <!-- BLDC and Servo -->
+  <include file="$(find auto_racecar)/launch/includes/motor.launch">
+    <arg name="port" value="$(arg motor_serial_port)"/>
+  </include>
+
+  <!-- Manually launch Joystick on another terminal -->
+  <!-- roslaunch auto_racecar auto_racecar_teleop.py -->
+
+  <!-- Manually launch Recording on another terminal when ready -->
+  <!-- rosbag record -a -->
+</launch>

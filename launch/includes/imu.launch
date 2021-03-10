@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- IMU -->
+<launch>
+  <arg name="imu_config_file" default="$(find auto_racecar)/params/imu.yaml"/>
+  <arg name="port"            default="/dev/gy85"/>
+  <arg name="topic"           default="imu"/>
+  <arg name="frame_id"        default="base_imu_link"/>
+
+  <node name="imu_node" pkg="razor_imu_9dof" type="imu_node.py" output="screen">
+    <rosparam file="$(arg imu_config_file)" command="load"/>
+    <param name="port"                      value="$(arg port)"/>
+    <param name="topic"                     value="$(arg topic)"/>
+    <param name="frame_id"                  value="$(arg frame_id)"/>
+  </node>
+</launch>
