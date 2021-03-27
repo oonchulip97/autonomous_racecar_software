@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- Gazebo -->
+<launch>
+  <arg name="gui"        default="true"/>
+  <arg name="verbose"    default="false"/>
+  <arg name="world_name" default="$(find auto_racecar)/worlds/racecar_corridor.world" />
+  <arg name="model_name" default="racecar"/>
+
+  <!-- Manually start state publisher beforehand -->
+  <!-- roslaunch auto_racecar state_publisher.launch -->
+
+  <!-- Launch World -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="gui"        value="$(arg gui)"/>
+    <arg name="verbose"    value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+  <!-- Spawn robot in Gazebo -->
+  <node name="spawn_car" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-param robot_description -urdf -model $(arg model_name) -z 0.4"/>
+</launch>

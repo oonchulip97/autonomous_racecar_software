@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- Controller -->
+<launch>
+  <arg name="controller_config_file" default="$(find auto_racecar)/params/controller.yaml"/>
+  <arg name="controller_name"        default="steering_hinge_position_controller
+                                              wheel_velocity_controller
+                                              joint_state_controller"/>
+
+  <!-- Load controller configurations -->
+  <rosparam file="$(arg controller_config_file)" command="load"/>
+
+  <!-- Load controller -->
+  <node name="controller_manager" pkg="controller_manager" type="spawner" output="screen" args="$(arg controller_name)"/>
+
+</launch>

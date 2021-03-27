@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="racecar">
+
+  <!-- Geometry -->
+
+  <xacro:macro name="chassis_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://auto_racecar/urdf/meshes/chassis.stl"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="steering_hinge_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <cylinder length="0.0100" radius="0.0025" />
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="left_wheel_geometry">
+    <origin xyz="0 0 0" rpy="-1.571 0 0" />
+    <geometry>
+      <mesh filename="package://auto_racecar/urdf/meshes/wheel.stl"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="right_wheel_geometry">
+    <origin xyz="0 0 0" rpy="1.571 0 0" />
+    <geometry>
+      <mesh filename="package://auto_racecar/urdf/meshes/wheel.stl"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="imu_geometry">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://auto_racecar/urdf/meshes/imu.stl"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="laser_geometry">
+    <origin xyz="0.0134 0 0" rpy="0 0 0" />
+    <geometry>
+      <mesh filename="package://auto_racecar/urdf/meshes/lidar.stl"/>
+    </geometry>
+  </xacro:macro>
+
+  <!-- Collision -->
+
+  <xacro:macro name="chassis_collision">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.3654 0.1600 0.1412"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="left_wheel_collision">
+    <origin xyz="0 0 0" rpy="-1.571 0 0"/>
+    <geometry>
+      <cylinder length="0.0272" radius="0.0332"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="right_wheel_collision">
+    <origin xyz="0 0 0" rpy="1.571 0 0"/>
+    <geometry>
+      <cylinder length="0.0272" radius="0.0332"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="imu_collision">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.0139 0.0202 0.0127"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="laser_collision">
+    <origin xyz="0.0134 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.0967 0.0703 0.0555"/>
+    </geometry>
+  </xacro:macro>
+
+  <!-- Inertial -->
+
+  <xacro:macro name="chassis_inertia">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <mass value="3.000" />
+    <inertia ixx="0.0129" ixy="0"      ixz="0"
+                          iyy="0.0384" iyz="0"
+                                       izz="0.0413"/>
+  </xacro:macro>
+
+  <xacro:macro name="steering_hinge_inertia">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.1000"/>
+    <inertia ixx="9.896E-7" ixy="0"         ixz="0"
+                            iyy="9.896E-7"  iyz="0"
+                                            izz="3.125E-7"/>
+  </xacro:macro>
+
+  <xacro:macro name="left_wheel_inertia">
+    <origin xyz="0 0 0" rpy="-1.571 0 0"/>
+    <mass value="0.1000"/>
+    <inertia ixx="3.000E-5" ixy="0"        ixz="0"
+                            iyy="3.000E-5" iyz="0"
+                                           izz="5.510E-5"/>
+  </xacro:macro>
+
+  <xacro:macro name="right_wheel_inertia">
+    <origin xyz="0 0 0" rpy="1.571 0 0"/>
+    <mass value="0.1000"/>
+    <inertia ixx="3.000E-5" ixy="0"        ixz="0"
+                            iyy="3.000E-5" iyz="0"
+                                           izz="5.510E-5"/>
+  </xacro:macro>
+
+  <xacro:macro name="imu_inertia">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.0100"/>
+    <inertia ixx="4.744E-7" ixy="0"        ixz="0"
+                            iyy="2.954E-7" iyz="0"
+                                           izz="5.010E-7"/>
+  </xacro:macro>
+
+  <xacro:macro name="laser_inertia">
+    <origin xyz="0.0134 0 0" rpy="0 0 0"/>
+    <mass value="0.1700"/>
+    <inertia ixx="0.0001" ixy="0"      ixz="0"
+                          iyy="0.0002" iyz="0"
+                                       izz="0.0002"/>
+  </xacro:macro>
+
+  <!-- Transmission -->
+
+  <xacro:macro name="steering_hinge_transmission" params="name">
+    <transmission name="${name}_steering_hinge_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_steering_hinge_joint">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_steering_hinge_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:macro name="wheel_transmission" params="name">
+    <transmission name="${name}_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+</robot>

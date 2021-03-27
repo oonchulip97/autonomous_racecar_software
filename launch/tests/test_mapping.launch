@@ -13,6 +13,7 @@
   <arg name="odom_topic"              default="odom"/>
   <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
   <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
 
   <!-- Transform -->
   <!-- TODO -->
@@ -40,6 +41,7 @@
   <!-- Laser Odometry -->
   <include file="$(find auto_racecar)/launch/includes/laser_odom.launch">
     <arg name="base_frame_id"    value="$(arg base_frame)"/>
+    <arg name="odom_frame_id"    value="$(arg odom_frame)"/>
     <arg name="laser_scan_topic" value="$(arg laser_topic)"/>
     <arg name="odom_topic"       value="$(arg odom_topic)"/>
   </include>
@@ -51,7 +53,7 @@
     <arg name="map_frame"               value="$(arg map_frame)"/>
     <arg name="world_frame"             value="$(arg odom_frame)"/>
     <arg name="imu0"                    value="$(arg imu_topic)"/>
-    <arg name="odom0"                   value="$(odom_topic)"/>
+    <arg name="odom0"                   value="$(arg odom_topic)"/>
   </include>
 
   <!-- Mapping -->
@@ -62,9 +64,12 @@
     <arg name="scan_topic" value="$(arg laser_topic)"/>
   </include>
 
+  <!-- Rviz -->
+  <include file="$(find auto_racecar)/launch/includes/rviz.launch">
+    <arg name="rviz_config_file" value="$(arg rviz_config_file)"/>
+  </include>
+
   <!-- Manually launch Joystick on another terminal -->
   <!-- roslaunch auto_racecar auto_racecar_teleop.py -->
 
-  <!-- Manually launch Rviz on remote terminal -->
-  <!-- rosrun rviz rviz -d `rospack find auto_racecar`/rviz/mapping.rviz -->
 </launch>

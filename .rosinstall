@@ -8,5 +8,5 @@
     version: KristofRobot-PR
 - git:
     local-name: rf2o_laser_odometry
-    uri: https://github.com/MAPIRlab/rf2o_laser_odometry.git
+    uri: https://github.com/tianb03/rf2o_laser_odometry.git
     version: master

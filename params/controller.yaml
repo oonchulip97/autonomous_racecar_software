@@ -1,0 +1,20 @@
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# Position Controllers ---------------------------------------
+steering_hinge_position_controller:
+  type: position_controllers/JointGroupPositionController
+  joints:
+    - left_steering_hinge_joint
+    - right_steering_hinge_joint
+
+# Velocity Controllers ---------------------------------------
+wheel_velocity_controller:
+  type: velocity_controllers/JointGroupVelocityController
+  joints:
+    - left_front_wheel_joint
+    - right_front_wheel_joint
+    - left_rear_wheel_joint
+    - right_rear_wheel_joint
