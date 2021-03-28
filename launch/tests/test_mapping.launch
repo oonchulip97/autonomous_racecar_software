@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="model_name"              default="racecar"/>
+  <arg name="model"                   default="$(find auto_racecar)/urdf/urdf/racecar.urdf.xacro"/>
+  <arg name="publish_joint_state"     default="true" />
   <arg name="laser_serial_port"       default="/dev/rplidar"/>
   <arg name="imu_serial_port"         default="/dev/gy85"/>
   <arg name="motor_serial_port"       default="/dev/uno"/>
@@ -8,15 +11,17 @@
   <arg name="base_frame"              default="base_link"/>
   <arg name="odom_frame"              default="odom"/>
   <arg name="map_frame"               default="map"/>
-  <arg name="laser_topic"             default="scan"/>
-  <arg name="imu_topic"               default="imu"/>
-  <arg name="odom_topic"              default="odom"/>
+  <arg name="laser_topic"             default="/scan"/>
+  <arg name="imu_topic"               default="/imu"/>
+  <arg name="odom_topic"              default="/odom"/>
   <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
   <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
-  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
 
-  <!-- Transform -->
-  <!-- TODO -->
+  <!-- State -->
+  <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
+    <arg name="model"                   value="$(arg model)"/>
+    <arg name="publish_joint_state"     value="$(arg publish_joint_state)"/>
+  </include>
 
   <!-- Sensors and Actuators -->
   <!-- Lidar -->
@@ -26,7 +31,7 @@
     <arg name="topic"       value="$(arg laser_topic)"/>
   </include>
   <!-- IMU -->
-  <include file="$(find auto_racecar)/launch/includes/imu.launch" />
+  <include file="$(find auto_racecar)/launch/includes/imu.launch">
     <arg name="imu_config_file" value="$(arg imu_config_file)"/>
     <arg name="port"            value="$(arg imu_serial_port)"/>
     <arg name="frame_id"        value="$(arg imu_frame)"/>
@@ -34,7 +39,7 @@
   </include>
   <!-- BLDC and Servo -->
   <include file="$(find auto_racecar)/launch/includes/motor.launch">
-    <arg name="port" value="$(motor_serial_port)"/>
+    <arg name="port" value="$(arg motor_serial_port)"/>
   </include>
 
   <!-- Odometry -->
@@ -64,12 +69,15 @@
     <arg name="scan_topic" value="$(arg laser_topic)"/>
   </include>
 
-  <!-- Rviz -->
-  <include file="$(find auto_racecar)/launch/includes/rviz.launch">
-    <arg name="rviz_config_file" value="$(arg rviz_config_file)"/>
-  </include>
+  <!-- Load Command Converter -->
+  <node name="racecar_command" pkg="auto_racecar" type="racecar_command.py" output="screen"/>
 
   <!-- Manually launch Joystick on another terminal -->
-  <!-- roslaunch auto_racecar auto_racecar_teleop.py -->
+  <!-- rosrun auto_racecar racecar_teleop.py -->
 
+  <!-- Manually launch Rviz on remote computer -->
+  <!-- rosrun rviz rviz -d `rospack find auto_racecar`/rviz/teleop.rviz-->
+
+  <!-- Manually save map when finish -->
+  <!-- rosrun map_server map_saver -f mymap -->
 </launch>

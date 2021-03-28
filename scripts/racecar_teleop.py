@@ -88,8 +88,8 @@ class Velocity(object):
     turn_mid = 0
 
     # Increment in throttling and steering
-    speed_inc = 1.0
-    turn_inc = 0.3
+    speed_inc = 1.5
+    turn_inc = 0.2
 
     def __init__(self):
         """Constructor."""
@@ -184,8 +184,8 @@ def publish_command(pub, speed, turn):
     :param speed: throttling value
     :param turn: steering value
     :type pub: rospy.Publisher
-    :type speed: int
-    :type turn: int
+    :type speed: float
+    :type turn: float
     """
     twist = Twist()
     twist.linear.x = speed
@@ -199,7 +199,7 @@ def publish_command(pub, speed, turn):
 
 def main():
     """Main function."""
-    rospy.init_node('gazebo_teleop')
+    rospy.init_node('racecar_teleop')
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=5)
 
     key = Key()
@@ -207,7 +207,6 @@ def main():
     process = Process(key, vel)
     try:
         key.print_prompt()
-        vel.print_velocity()
 
         while True:
             # Process key into command velocity
@@ -218,7 +217,7 @@ def main():
             publish_command(pub, command[0], command[1])
 
     except rospy.ROSInterruptException:
-        print("gazebo_teleop: Node is shutting down.")
+        print("racecar_teleop: Node is shutting down.")
 
     finally:
         # Stop the car in the end

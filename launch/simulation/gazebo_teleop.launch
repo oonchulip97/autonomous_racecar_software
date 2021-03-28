@@ -22,7 +22,7 @@
   <arg name="controller_config_file"  default="$(find auto_racecar)/params/controller.yaml"/>
   <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
   <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
-  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
+  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/teleop.rviz"/>
 
   <!-- State -->
   <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
@@ -62,14 +62,6 @@
     <arg name="odom0"                   value="$(arg odom_topic)"/>
   </include>
 
-  <!-- Mapping -->
-  <include file="$(find auto_racecar)/launch/includes/mapping.launch">
-    <arg name="base_frame" value="$(arg base_frame)"/>
-    <arg name="odom_frame" value="$(arg odom_frame)"/>
-    <arg name="map_frame"  value="$(arg map_frame)"/>
-    <arg name="scan_topic" value="$(arg laser_topic)"/>
-  </include>
-
   <!-- Load Command Converter -->
   <node name="gazebo_command" pkg="auto_racecar" type="gazebo_command.py" output="screen"/>
 
@@ -80,7 +72,4 @@
 
   <!-- Manually launch Joystick on another terminal -->
   <!-- rosrun auto_racecar racecar_teleop.py -->
-
-  <!-- Manually save map when finish -->
-  <!-- rosrun map_server map_saver -f mymap -->
 </launch>

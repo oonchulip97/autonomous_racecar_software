@@ -2,12 +2,7 @@
 <launch>
   <arg name="model_name"              default="racecar"/>
   <arg name="model"                   default="$(find auto_racecar)/urdf/urdf/racecar.urdf.xacro"/>
-  <arg name="world"                   default="$(find auto_racecar)/worlds/racecar_corridor.world" />
-  <arg name="controller_name"         default="steering_hinge_position_controller
-                                               wheel_velocity_controller
-                                               joint_state_controller"/>
-  <arg name="publish_joint_state"     default="false" />
-  <arg name="gazebo_gui"              default="false"/>
+  <arg name="publish_joint_state"     default="true" />
   <arg name="laser_serial_port"       default="/dev/rplidar"/>
   <arg name="imu_serial_port"         default="/dev/gy85"/>
   <arg name="motor_serial_port"       default="/dev/uno"/>
@@ -19,10 +14,8 @@
   <arg name="laser_topic"             default="/scan"/>
   <arg name="imu_topic"               default="/imu"/>
   <arg name="odom_topic"              default="/odom"/>
-  <arg name="controller_config_file"  default="$(find auto_racecar)/params/controller.yaml"/>
   <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
   <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
-  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
 
   <!-- State -->
   <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
@@ -30,17 +23,23 @@
     <arg name="publish_joint_state"     value="$(arg publish_joint_state)"/>
   </include>
 
-  <!-- World -->
-  <include file="$(find auto_racecar)/launch/includes/gazebo.launch">
-    <arg name="world_name" value="$(arg world)"/>
-    <arg name="model_name" value="$(arg model_name)"/>
-    <arg name="gui"        value="$(arg gazebo_gui)"/>
+  <!-- Sensors and Actuators -->
+  <!-- Lidar -->
+  <include file="$(find auto_racecar)/launch/includes/lidar.launch">
+    <arg name="serial_port" value="$(arg laser_serial_port)"/>
+    <arg name="frame_id"    value="$(arg laser_frame)"/>
+    <arg name="topic"       value="$(arg laser_topic)"/>
   </include>
-
-  <!-- Controllers -->
-  <include file="$(find auto_racecar)/launch/includes/controller.launch">
-    <arg name="controller_config_file" value="$(arg controller_config_file)"/>
-    <arg name="controller_name"        value="$(arg controller_name)"/>
+  <!-- IMU -->
+  <include file="$(find auto_racecar)/launch/includes/imu.launch">
+    <arg name="imu_config_file" value="$(arg imu_config_file)"/>
+    <arg name="port"            value="$(arg imu_serial_port)"/>
+    <arg name="frame_id"        value="$(arg imu_frame)"/>
+    <arg name="topic"           value="$(arg imu_topic)"/>
+  </include>
+  <!-- BLDC and Servo -->
+  <include file="$(find auto_racecar)/launch/includes/motor.launch">
+    <arg name="port" value="$(arg motor_serial_port)"/>
   </include>
 
   <!-- Odometry -->
@@ -62,25 +61,12 @@
     <arg name="odom0"                   value="$(arg odom_topic)"/>
   </include>
 
-  <!-- Mapping -->
-  <include file="$(find auto_racecar)/launch/includes/mapping.launch">
-    <arg name="base_frame" value="$(arg base_frame)"/>
-    <arg name="odom_frame" value="$(arg odom_frame)"/>
-    <arg name="map_frame"  value="$(arg map_frame)"/>
-    <arg name="scan_topic" value="$(arg laser_topic)"/>
-  </include>
-
   <!-- Load Command Converter -->
-  <node name="gazebo_command" pkg="auto_racecar" type="gazebo_command.py" output="screen"/>
-
-  <!-- Rviz -->
-  <include file="$(find auto_racecar)/launch/includes/rviz.launch">
-    <arg name="rviz_config_file" value="$(arg rviz_config_file)"/>
-  </include>
+  <node name="racecar_command" pkg="auto_racecar" type="racecar_command.py" output="screen"/>
 
   <!-- Manually launch Joystick on another terminal -->
   <!-- rosrun auto_racecar racecar_teleop.py -->
 
-  <!-- Manually save map when finish -->
-  <!-- rosrun map_server map_saver -f mymap -->
+  <!-- Manually launch Rviz on remote computer -->
+  <!-- rosrun rviz rviz -d `rospack find auto_racecar`/rviz/teleop.rviz-->
 </launch>
