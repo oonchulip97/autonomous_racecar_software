@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model_name"                     default="racecar"/>
+  <arg name="model"                          default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
+  <arg name="world"                          default="$(find auto_racecar)/worlds/racecar_virtual_room.world"/>
+  <arg name="map"                            default="$(find auto_racecar)/maps/racecar_virtual_room.yaml"/>
+  <arg name="initial_pose_x"                 default="0.0"/>
+  <arg name="initial_pose_y"                 default="0.0"/>
+  <arg name="initial_pose_a"                 default="0.0"/>
+  <arg name="controller_name"                default="steering_hinge_position_controller
+                                                  wheel_velocity_controller
+                                                  joint_state_controller"/>
+  <arg name="publish_joint_state"            default="false" />
+  <arg name="gazebo_gui"                     default="false"/>
+  <arg name="laser_serial_port"              default="/dev/rplidar"/>
+  <arg name="imu_serial_port"                default="/dev/gy85"/>
+  <arg name="motor_serial_port"              default="/dev/uno"/>
+  <arg name="laser_frame"                    default="base_laser_link"/>
+  <arg name="imu_frame"                      default="base_imu_link"/>
+  <arg name="base_frame"                     default="base_link"/>
+  <arg name="odom_frame"                     default="odom"/>
+  <arg name="map_frame"                      default="map"/>
+  <arg name="laser_topic"                    default="/scan"/>
+  <arg name="imu_topic"                      default="/imu"/>
+  <arg name="odom_topic"                     default="/odom"/>
+  <arg name="odom_filtered_topic"            default="/odometry/filtered"/>
+  <arg name="controller_config_file"         default="$(find auto_racecar)/config/controller.yaml"/>
+  <arg name="imu_config_file"                default="$(find auto_racecar)/config/imu.yaml"/>
+  <arg name="odom_filter_config_file"        default="$(find auto_racecar)/config/odom_filter.yaml"/>
+  <arg name="common_costmap_config_file"     default="$(find auto_racecar)/config/common_costmap.yaml"/>
+  <arg name="global_costmap_config_file"     default="$(find auto_racecar)/config/global_costmap.yaml"/>
+  <arg name="local_costmap_config_file"      default="$(find auto_racecar)/config/local_costmap.yaml"/>
+  <arg name="move_base_config_file"          default="$(find auto_racecar)/config/move_base.yaml"/>
+  <arg name="base_local_planner_config_file" default="$(find auto_racecar)/config/base_local_planner.yaml"/>
+  <arg name="rviz_config_file"               default="$(find auto_racecar)/rviz/navigation.rviz"/>
+
+  <!-- State -->
+  <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
+    <arg name="model"                   value="$(arg model)"/>
+    <arg name="publish_joint_state"     value="$(arg publish_joint_state)"/>
+  </include>
+
+  <!-- World -->
+  <include file="$(find auto_racecar)/launch/includes/gazebo.launch">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="model_name" value="$(arg model_name)"/>
+    <arg name="gui"        value="$(arg gazebo_gui)"/>
+  </include>
+
+  <!-- Controllers -->
+  <include file="$(find auto_racecar)/launch/includes/controller.launch">
+    <arg name="controller_config_file" value="$(arg controller_config_file)"/>
+    <arg name="controller_name"        value="$(arg controller_name)"/>
+  </include>
+
+  <!-- Odometry -->
+  <!-- Laser Odometry -->
+  <include file="$(find auto_racecar)/launch/includes/laser_odom.launch">
+    <arg name="base_frame_id"    value="$(arg base_frame)"/>
+    <arg name="odom_frame_id"    value="$(arg odom_frame)"/>
+    <arg name="laser_scan_topic" value="$(arg laser_topic)"/>
+    <arg name="odom_topic"       value="$(arg odom_topic)"/>
+  </include>
+  <!-- Odometry Filter -->
+  <include file="$(find auto_racecar)/launch/includes/odom_filter.launch">
+    <arg name="odom_filter_config_file" value="$(arg odom_filter_config_file)"/>
+    <arg name="base_link_frame"         value="$(arg base_frame)"/>
+    <arg name="odom_frame"              value="$(arg odom_frame)"/>
+    <arg name="map_frame"               value="$(arg map_frame)"/>
+    <arg name="world_frame"             value="$(arg odom_frame)"/>
+    <arg name="imu0"                    value="$(arg imu_topic)"/>
+    <arg name="odom0"                   value="$(arg odom_topic)"/>
+    <arg name="odom_filtered"           value="$(arg odom_filtered_topic)"/>
+  </include>
+
+  <!-- Map -->
+  <include file="$(find auto_racecar)/launch/includes/map_server.launch">
+    <arg name="map" value="$(arg map)"/>
+  </include>
+
+  <!-- Localization -->
+  <include file="$(find auto_racecar)/launch/includes/localization.launch">
+    <arg name="global_frame_id" value="$(arg map_frame)"/>
+    <arg name="odom_frame_id"   value="$(arg odom_frame)"/>
+    <arg name="base_frame_id"   value="$(arg base_frame)"/>
+    <arg name="initial_pose_x"  value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y"  value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a"  value="$(arg initial_pose_a)"/>
+  </include>
+
+  <!-- Navigation -->
+  <!-- NOTE: Parameters in configuration files are not exposed! Change manually -->
+  <include file="$(find auto_racecar)/launch/includes/navigation.launch">
+    <arg name="common_costmap_config_file"     value="$(arg common_costmap_config_file)"/>
+    <arg name="global_costmap_config_file"     value="$(arg global_costmap_config_file)"/>
+    <arg name="local_costmap_config_file"      value="$(arg local_costmap_config_file)"/>
+    <arg name="move_base_config_file"          value="$(arg move_base_config_file)"/>
+    <arg name="base_local_planner_config_file" value="$(arg base_local_planner_config_file)"/>
+    <arg name="odom"                           value="$(arg odom_filtered_topic)"/>
+  </include>
+
+  <!-- Load Command Converter -->
+  <node name="gazebo_command" pkg="auto_racecar" type="gazebo_command.py" output="screen"/>
+
+  <!-- Rviz -->
+  <include file="$(find auto_racecar)/launch/includes/rviz.launch">
+    <arg name="rviz_config_file" value="$(arg rviz_config_file)"/>
+  </include>
+
+</launch>

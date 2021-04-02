@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="racecar">
 
-  <xacro:include filename="$(find auto_racecar)/urdf/urdf/macros.urdf.xacro"/>
-  <xacro:include filename="$(find auto_racecar)/urdf/urdf/materials.urdf.xacro"/>
-  <xacro:include filename="$(find auto_racecar)/urdf/urdf/racecar.gazebo"/>
+  <xacro:include filename="$(find auto_racecar)/urdf/macros.urdf.xacro"/>
+  <xacro:include filename="$(find auto_racecar)/urdf/materials.urdf.xacro"/>
+  <xacro:include filename="$(find auto_racecar)/urdf/racecar.gazebo"/>
 
   <!-- Base Link -->
 

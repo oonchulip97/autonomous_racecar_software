@@ -3,7 +3,7 @@
 <launch>
   <arg name="gui"        default="true"/>
   <arg name="verbose"    default="false"/>
-  <arg name="world_name" default="$(find auto_racecar)/worlds/racecar_corridor.world" />
+  <arg name="world_name" default="$(find auto_racecar)/worlds/racecar_virtual_room.world" />
   <arg name="model_name" default="racecar"/>
 
   <!-- Manually start state publisher beforehand -->

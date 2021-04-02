@@ -1,0 +1,14 @@
+PurePursuitPlanner:
+  wheel_base: 0.25
+  lookahead_dist: 1.5
+  linear_vel: 3.0
+  max_angular_pos: 0.4
+  transform_tolerance: 0.1
+  goal_tolerance: 0.5
+
+  enable_vel_scaling: true
+  min_scaling_vel: 1.5
+  min_scaling_radius: 2.0
+
+  enable_collision_checking: true
+  collision_projected_time: 0.5

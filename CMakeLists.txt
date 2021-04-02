@@ -7,7 +7,16 @@ project(auto_racecar)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  costmap_2d
+  geometry_msgs
+  nav_core
+  nav_msgs
+  pluginlib
+  roscpp
+  tf2
+  tf2_ros
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -99,9 +108,17 @@ find_package(catkin REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES auto_racecar
-#  CATKIN_DEPENDS other_catkin_pkg
+  INCLUDE_DIRS include
+  LIBRARIES pure_pursuit_planner
+  CATKIN_DEPENDS
+    costmap_2d
+    geometry_msgs
+    nav_core
+    nav_msgs
+    pluginlib
+    roscpp
+    tf2
+    tf2_ros
 #  DEPENDS system_lib
 )
 
@@ -112,14 +129,14 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+  include
+  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/auto_racecar.cpp
-# )
+add_library(pure_pursuit_planner
+  src/pure_pursuit_planner.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -142,7 +159,7 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
+# target_link_libraries(pure_pursuit_planner
 #   ${catkin_LIBRARIES}
 # )
 

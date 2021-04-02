@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="model_name"              default="racecar"/>
-  <arg name="model"                   default="$(find auto_racecar)/urdf/urdf/racecar.urdf.xacro"/>
+  <arg name="model"                   default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
   <arg name="publish_joint_state"     default="true" />
   <arg name="laser_serial_port"       default="/dev/rplidar"/>
   <arg name="imu_serial_port"         default="/dev/gy85"/>
@@ -14,8 +14,9 @@
   <arg name="laser_topic"             default="/scan"/>
   <arg name="imu_topic"               default="/imu"/>
   <arg name="odom_topic"              default="/odom"/>
-  <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
-  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+  <arg name="odom_filtered_topic"     default="/odometry/filtered"/>
+  <arg name="imu_config_file"         default="$(find auto_racecar)/config/imu.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/config/odom_filter.yaml"/>
 
   <!-- State -->
   <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
@@ -59,12 +60,13 @@
     <arg name="world_frame"             value="$(arg odom_frame)"/>
     <arg name="imu0"                    value="$(arg imu_topic)"/>
     <arg name="odom0"                   value="$(arg odom_topic)"/>
+    <arg name="odom_filtered"           value="$(arg odom_filtered_topic)"/>
   </include>
 
   <!-- Load Command Converter -->
   <node name="racecar_command" pkg="auto_racecar" type="racecar_command.py" output="screen"/>
 
-  <!-- Manually launch Joystick on another terminal -->
+  <!-- Manually launch Joystick on remote computer -->
   <!-- rosrun auto_racecar racecar_teleop.py -->
 
   <!-- Manually launch Rviz on remote computer -->

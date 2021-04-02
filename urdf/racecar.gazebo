@@ -119,7 +119,7 @@
         <topicName>imu</topicName>
         <bodyName>base_imu_link</bodyName>
         <updateRateHZ>100</updateRateHZ>
-        <gaussianNoise>0.05</gaussianNoise>
+        <gaussianNoise>0.01</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
         <frameName>base_imu_link</frameName>

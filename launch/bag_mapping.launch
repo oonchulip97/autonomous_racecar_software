@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="model_name"              default="racecar"/>
+  <arg name="model"                   default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
+  <arg name="publish_joint_state"     default="true" />
   <arg name="laser_serial_port"       default="/dev/rplidar"/>
   <arg name="imu_serial_port"         default="/dev/gy85"/>
   <arg name="motor_serial_port"       default="/dev/uno"/>
@@ -11,9 +14,10 @@
   <arg name="laser_topic"             default="scan"/>
   <arg name="imu_topic"               default="imu"/>
   <arg name="odom_topic"              default="odom"/>
-  <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
-  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
-  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/default.rviz"/> <!-- TODO(CHULIP): Change config -->
+  <arg name="odom_filtered_topic"     default="/odometry/filtered"/>
+  <arg name="imu_config_file"         default="$(find auto_racecar)/config/imu.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/config/odom_filter.yaml"/>
+  <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
 
   <!-- Use simulated time -->
   <param name="use_sim_time" value="true"/>
@@ -34,6 +38,7 @@
     <arg name="world_frame"             value="$(arg odom_frame)"/>
     <arg name="imu0"                    value="$(arg imu_topic)"/>
     <arg name="odom0"                   value="$(arg odom_topic)"/>
+    <arg name="odom_filtered"           value="$(arg odom_filtered_topic)"/>
   </include>
 
   <!-- Mapping -->
@@ -49,9 +54,9 @@
     <arg name="rviz_config_file" value="$(arg rviz_config_file)"/>
   </include>
 
-  <!-- Manually launch Play on another terminal when ready -->
+  <!-- Manually launch Play on remote computer when ready -->
   <!-- rosbag play - -clock .bag -->
 
   <!-- Manually save map when finish -->
-  <!-- rosrun map_server map_saver -->
+  <!-- rosrun map_server map_saver -f mymap-->
 </launch>

@@ -1,0 +1,6 @@
+<library path="lib/libpure_pursuit_planner">
+  <class name="auto_racecar/PurePursuitPlanner" type="auto_racecar::PurePursuitPlanner"
+    base_class_type="nav_core::BaseLocalPlanner">
+    <description>Plugin for vehicle lateral control using Pure Pursuit Algorithm</description>
+  </class>
+</library>

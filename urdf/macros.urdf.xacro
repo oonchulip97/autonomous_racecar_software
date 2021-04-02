@@ -6,7 +6,7 @@
   <xacro:macro name="chassis_geometry">
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="package://auto_racecar/urdf/meshes/chassis.stl"/>
+      <mesh filename="package://auto_racecar/meshes/chassis.stl"/>
     </geometry>
   </xacro:macro>
 
@@ -20,28 +20,28 @@
   <xacro:macro name="left_wheel_geometry">
     <origin xyz="0 0 0" rpy="-1.571 0 0" />
     <geometry>
-      <mesh filename="package://auto_racecar/urdf/meshes/wheel.stl"/>
+      <mesh filename="package://auto_racecar/meshes/wheel.stl"/>
     </geometry>
   </xacro:macro>
 
   <xacro:macro name="right_wheel_geometry">
     <origin xyz="0 0 0" rpy="1.571 0 0" />
     <geometry>
-      <mesh filename="package://auto_racecar/urdf/meshes/wheel.stl"/>
+      <mesh filename="package://auto_racecar/meshes/wheel.stl"/>
     </geometry>
   </xacro:macro>
 
   <xacro:macro name="imu_geometry">
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="package://auto_racecar/urdf/meshes/imu.stl"/>
+      <mesh filename="package://auto_racecar/meshes/imu.stl"/>
     </geometry>
   </xacro:macro>
 
   <xacro:macro name="laser_geometry">
     <origin xyz="0.0134 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="package://auto_racecar/urdf/meshes/lidar.stl"/>
+      <mesh filename="package://auto_racecar/meshes/lidar.stl"/>
     </geometry>
   </xacro:macro>
 

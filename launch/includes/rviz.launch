@@ -3,5 +3,5 @@
 <launch>
   <arg name="rviz_config_file" default="$(find auto_racecar)/rviz/default.rviz"/>
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config_file)"/>
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(arg rviz_config_file)"/>
 </launch>

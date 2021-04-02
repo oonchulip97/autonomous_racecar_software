@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- Lidar -->
 <launch>
-  <arg name="topic"       default="scan"/>
+  <arg name="topic"            default="scan"/>
   <arg name="serial_port"      default="/dev/rplidar"/>
   <arg name="serial_baudrate"  default="115200"/>
   <arg name="frame_id"         default="base_laser_link"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- Controller -->
 <launch>
-  <arg name="controller_config_file" default="$(find auto_racecar)/params/controller.yaml"/>
+  <arg name="controller_config_file" default="$(find auto_racecar)/config/controller.yaml"/>
   <arg name="controller_name"        default="steering_hinge_position_controller
                                               wheel_velocity_controller
                                               joint_state_controller"/>

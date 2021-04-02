@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <!-- Odometry Filter -->
 <launch>
-  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/config/odom_filter.yaml"/>
   <arg name="map_frame"               default="map"/>
   <arg name="odom_frame"              default="odom"/>
   <arg name="base_link_frame"         default="base_link"/>
   <arg name="world_frame"             default="odom"/>
   <arg name="odom0"                   default="odom"/>
   <arg name="imu0"                    default="imu"/>
+  <arg name="odom_filtered"           default="odometry/filtered"/>
 
   <node name="ekf_se" pkg="robot_localization" type="ekf_localization_node" output="screen">
     <rosparam file="$(arg odom_filter_config_file)" command="load"/>
@@ -17,9 +18,8 @@
     <param name="world_frame"                       value="$(arg world_frame)"/>
     <param name="odom0"                             value="$(arg odom0)"/>
     <param name="imu0"                              value="$(arg imu0)"/>
-    <!--  Placeholder for output topic remapping
-    <remap from="odometry/filtered" to=""/>
-    <remap from="accel/filtered" to=""/>
-    -->
+    <!--  Placeholder for output topic remapping -->
+    <remap from="odometry/filtered"                 to="$(arg odom_filtered)"/>
+    <!-- <remap from="accel/filtered" to=""/> -->
   </node>
 </launch>

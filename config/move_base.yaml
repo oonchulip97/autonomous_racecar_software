@@ -1,0 +1,4 @@
+controller_frequency: 10.0
+planner_frequency: 0.0
+clearing_rotation_allowed: false
+base_local_planner: auto_racecar/PurePursuitPlanner

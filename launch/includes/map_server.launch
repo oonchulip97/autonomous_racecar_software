@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!-- Map Server -->
+<launch>
+  <arg name="map" default="$(find auto_racecar)/maps/racecar_room.yaml"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" output="screen" args="$(arg map)"/>
+</launch>

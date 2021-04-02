@@ -19,7 +19,7 @@
   <arg name="odom_frame_id"        default="odom"/>
   <arg name="publish_tf"           default="false"/>
   <arg name="init_pose_from_topic" default=""/>
-  <arg name="freq"                 default="2.0"/>
+  <arg name="freq"                 default="5.0"/>
   <arg name="verbose"              default="false"/>
 
   <node name="rf2o_laser_odometry" pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" output="screen">

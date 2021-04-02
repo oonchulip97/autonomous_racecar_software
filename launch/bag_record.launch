@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="model_name"              default="racecar"/>
+  <arg name="model"                   default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
+  <arg name="publish_joint_state"     default="true" />
   <arg name="laser_serial_port"       default="/dev/rplidar"/>
   <arg name="imu_serial_port"         default="/dev/gy85"/>
   <arg name="motor_serial_port"       default="/dev/uno"/>
@@ -11,11 +14,15 @@
   <arg name="laser_topic"             default="scan"/>
   <arg name="imu_topic"               default="imu"/>
   <arg name="odom_topic"              default="odom"/>
-  <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
-  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+  <arg name="odom_filtered_topic"     default="/odometry/filtered"/>
+  <arg name="imu_config_file"         default="$(find auto_racecar)/config/imu.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/config/odom_filter.yaml"/>
 
-  <!-- Transform -->
-  <!-- TODO -->
+  <!-- State -->
+  <include file="$(find auto_racecar)/launch/includes/state_publisher.launch">
+    <arg name="model"               value="$(arg model)"/>
+    <arg name="publish_joint_state" value="$(arg publish_joint_state)"/>
+  </include>
 
   <!-- Sensors and Actuators -->
   <!-- Lidar -->
@@ -36,9 +43,12 @@
     <arg name="port" value="$(arg motor_serial_port)"/>
   </include>
 
-  <!-- Manually launch Joystick on another terminal -->
+  <!-- Load Command Converter -->
+  <node name="racecar_command" pkg="auto_racecar" type="racecar_command.py" output="screen"/>
+
+  <!-- Manually launch Joystick on remote computer -->
   <!-- roslaunch auto_racecar auto_racecar_teleop.py -->
 
-  <!-- Manually launch Recording on another terminal when ready -->
+  <!-- Manually launch Recording on remote computer when ready -->
   <!-- rosbag record -a -->
 </launch>

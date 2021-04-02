@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- State Publisher -->
 <launch>
-  <arg name="model"                   default="$(find auto_racecar)/urdf/urdf/racecar.urdf.xacro"/>
+  <arg name="model"                   default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
   <arg name="publish_joint_state"     default="true" />
   <arg name="publish_joint_state_gui" default="false" />
 
@@ -9,10 +9,11 @@
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
   <!-- Broadcast joint state -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" if="$(arg publish_joint_state)"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen"
+    if="$(arg publish_joint_state)"/>
   <!-- Broadcast link pose -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
   <!-- Control joint state for debugging -->
-  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen"
     if="$(arg publish_joint_state_gui)"/>
 </launch>

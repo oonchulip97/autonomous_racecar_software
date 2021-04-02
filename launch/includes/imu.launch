@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- IMU -->
 <launch>
-  <arg name="imu_config_file" default="$(find auto_racecar)/params/imu.yaml"/>
+  <arg name="imu_config_file" default="$(find auto_racecar)/config/imu.yaml"/>
   <arg name="port"            default="/dev/gy85"/>
   <arg name="topic"           default="imu"/>
   <arg name="frame_id"        default="base_imu_link"/>

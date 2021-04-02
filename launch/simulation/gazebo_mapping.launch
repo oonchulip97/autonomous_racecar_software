@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="model_name"              default="racecar"/>
-  <arg name="model"                   default="$(find auto_racecar)/urdf/urdf/racecar.urdf.xacro"/>
-  <arg name="world"                   default="$(find auto_racecar)/worlds/racecar_corridor.world" />
+  <arg name="model"                   default="$(find auto_racecar)/urdf/racecar.urdf.xacro"/>
+  <arg name="world"                   default="$(find auto_racecar)/worlds/racecar_virtual_room.world" />
   <arg name="controller_name"         default="steering_hinge_position_controller
                                                wheel_velocity_controller
                                                joint_state_controller"/>
@@ -19,9 +19,10 @@
   <arg name="laser_topic"             default="/scan"/>
   <arg name="imu_topic"               default="/imu"/>
   <arg name="odom_topic"              default="/odom"/>
-  <arg name="controller_config_file"  default="$(find auto_racecar)/params/controller.yaml"/>
-  <arg name="imu_config_file"         default="$(find auto_racecar)/params/imu.yaml"/>
-  <arg name="odom_filter_config_file" default="$(find auto_racecar)/params/odom_filter.yaml"/>
+  <arg name="odom_filtered_topic"     default="/odometry/filtered"/>
+  <arg name="controller_config_file"  default="$(find auto_racecar)/config/controller.yaml"/>
+  <arg name="imu_config_file"         default="$(find auto_racecar)/config/imu.yaml"/>
+  <arg name="odom_filter_config_file" default="$(find auto_racecar)/config/odom_filter.yaml"/>
   <arg name="rviz_config_file"        default="$(find auto_racecar)/rviz/mapping.rviz"/>
 
   <!-- State -->
@@ -60,6 +61,7 @@
     <arg name="world_frame"             value="$(arg odom_frame)"/>
     <arg name="imu0"                    value="$(arg imu_topic)"/>
     <arg name="odom0"                   value="$(arg odom_topic)"/>
+    <arg name="odom_filtered"           value="$(arg odom_filtered_topic)"/>
   </include>
 
   <!-- Mapping -->

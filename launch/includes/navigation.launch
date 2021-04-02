@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- Navigation -->
+<!-- NOTE: Parameters in configuration files are not exposed! Change manually -->
+<launch>
+  <arg name="common_costmap_config_file"     default="$(find auto_racecar)/config/common_costmap.yaml"/>
+  <arg name="global_costmap_config_file"     default="$(find auto_racecar)/config/global_costmap.yaml"/>
+  <arg name="local_costmap_config_file"      default="$(find auto_racecar)/config/local_costmap.yaml"/>
+  <arg name="move_base_config_file"          default="$(find auto_racecar)/config/move_base.yaml"/>
+  <arg name="base_local_planner_config_file" default="$(find auto_racecar)/config/base_local_planner.yaml"/>
+  <arg name="odom"                           default="/odometry/filtered"/>
+
+  <node name="move_base" pkg="move_base" type="move_base" output="screen">
+    <rosparam file="$(arg common_costmap_config_file)"     command="load" ns="global_costmap"/>
+    <rosparam file="$(arg common_costmap_config_file)"     command="load" ns="local_costmap"/>
+    <rosparam file="$(arg global_costmap_config_file)"     command="load"/>
+    <rosparam file="$(arg local_costmap_config_file)"      command="load"/>
+    <rosparam file="$(arg move_base_config_file)"          command="load"/>
+    <rosparam file="$(arg base_local_planner_config_file)" command="load"/>
+    <remap from="/odom" to="$(arg odom)"/>
+  </node>
+</launch>
