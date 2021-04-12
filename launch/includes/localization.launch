@@ -9,7 +9,7 @@
   <arg name="update_min_d"              default="0.1"/>
   <arg name="update_min_a"              default="0.1"/>
   <arg name="resample_interval"         default="1"/>
-  <arg name="transform_tolerance"       default="0.2"/>
+  <arg name="transform_tolerance"       default="0.1"/>
   <arg name="recovery_alpha_slow"       default="0.0"/>
   <arg name="recovery_alpha_fast"       default="0.0"/>
   <arg name="initial_pose_x"            default="0.0"/>
