@@ -9,7 +9,7 @@ from geometry_msgs.msg import Twist
 
 class CommandConverter(object):
     """Class to convert command velocity into joint commands."""
-    steer_multiplier = 1.0
+    steer_multiplier = 5.0  # increased to test planner performance
     throttle_multiplier = 1.0 / 0.0332  # 1 / wheel_radius
 
     def __init__(self):

@@ -13,7 +13,7 @@ class CommandConverter(object):
     Throttling value is duration of HIGH state of 50Hz pwm in microseconds.
     """
     steer_map = ((0.08, -0.08), (75, 105))
-    throttle_forward_map = ((1, 3), (1575, 1625))
+    throttle_forward_map = ((2.0, 3.0), (1575, 1575))  # restrict for safety
     throttle_backward_map = ((-1, -3), (1425, 1375))
     throttle_stop_value = 1500
 
