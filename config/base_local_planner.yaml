@@ -2,7 +2,7 @@ PurePursuitPlanner:
   wheel_base: 0.25
   lookahead_dist: 1.0
   linear_vel: 3.0
-  max_angular_pos: 0.4
+  max_angular_pos: 0.08
   transform_tolerance: 0.1
   goal_tolerance: 1.0
 

@@ -4,8 +4,8 @@
     version: main
 - git:
     local-name: razor_imu_9dof
-    uri: https://github.com/lebarsfa/razor_imu_9dof.git
-    version: KristofRobot-PR
+    uri: https://github.com/ENSTABretagneRobotics/razor_imu_9dof.git
+    version: indigo-devel
 - git:
     local-name: rf2o_laser_odometry
     uri: https://github.com/tianb03/rf2o_laser_odometry.git

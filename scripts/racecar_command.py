@@ -12,7 +12,7 @@ class CommandConverter(object):
     Steering value is angle of shaft in degrees.
     Throttling value is duration of HIGH state of 50Hz pwm in microseconds.
     """
-    steer_map = ((0.262, -0.262), (75, 105))
+    steer_map = ((0.08, -0.08), (75, 105))
     throttle_forward_map = ((1, 3), (1575, 1625))
     throttle_backward_map = ((-1, -3), (1425, 1375))
     throttle_stop_value = 1500

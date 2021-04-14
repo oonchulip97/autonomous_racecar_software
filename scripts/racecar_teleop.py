@@ -89,7 +89,7 @@ class Velocity(object):
 
     # Increment in throttling and steering
     speed_inc = 1.5
-    turn_inc = 0.2
+    turn_inc = 0.08
 
     def __init__(self):
         """Constructor."""
